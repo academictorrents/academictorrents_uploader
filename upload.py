@@ -3,7 +3,7 @@ import sys
 import json
 from base64 import b64encode
 from py3createtorrent import main as maketorrent
-from os.path import basename
+from os.path import basename, exists
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError
@@ -17,8 +17,11 @@ if len(sys.argv)!=9:
 # create the torrent
 torrent_args = sys.argv[0:2]
 torrent_args.append('http://academictorrents.com/announce.php')
-maketorrent(torrent_args)
 torrentname = basename(sys.argv[1]) + ".torrent"
+
+# if file exists, we assume torrent already created
+if not exists(torrentname):
+    maketorrent(torrent_args)
 
 # get base64 of torrent
 f = open(torrentname, 'rb')
