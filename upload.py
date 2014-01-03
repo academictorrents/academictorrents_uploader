@@ -40,8 +40,8 @@ else:
     exit()
 
 post_params = {
-    'uid' : matches[0],
-    'pass' : matches[1],
+    'uid' : matches.groups()[0],
+    'pass' : matches.groups()[1],
     'name' : sys.argv[3],
     'authors' : sys.argv[4],
     'descr' : sys.argv[5],
