@@ -29,7 +29,7 @@ b64_torrent = b64encode(f.read())
 f.close()
 
 # extract cookie args
-#matches = re.match("uid=(.*)&pass=(.*)", sys.argv[2])
+matches = re.match("uid=(.*)&pass=(.*)", sys.argv[2])
 
 if sys.argv[6].lower() == 'dataset':
     category = 6
@@ -40,8 +40,8 @@ else:
     exit()
 
 post_params = {
-    'uid' : "14",
-    'pass' : "71135221ceb8b5079cd15150d2126dcb",
+    'uid' : matches[0],
+    'pass' : matches[1],
     'name' : sys.argv[3],
     'authors' : sys.argv[4],
     'descr' : sys.argv[5],
