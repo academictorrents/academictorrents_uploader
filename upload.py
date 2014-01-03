@@ -10,14 +10,15 @@ from urllib.error import HTTPError
 import re
 
 if len(sys.argv)!=9:
-    print("Usage: ./upload.py <filename_or_directory> <api_key> <name> <authors> <descr> <category> <tags> <urllist>")
+    print("Usage: ./upload.py <api_key> <filename_or_directory> <name> <authors> <descr> <category> <tags> <urllist>")
     print("Put api_key in quotes!")
     sys.exit()
 
 # create the torrent
 torrent_args = sys.argv[0:2]
+torrent_args[1] = sys.argv[2]
 torrent_args.append('http://academictorrents.com/announce.php')
-torrentname = basename(sys.argv[1]) + ".torrent"
+torrentname = basename(sys.argv[2]) + ".torrent"
 
 # if file exists, we assume torrent already created
 if not exists(torrentname):
@@ -29,7 +30,7 @@ b64_torrent = b64encode(f.read())
 f.close()
 
 # extract cookie args
-matches = re.match("uid=(.*)&pass=(.*)", sys.argv[2])
+matches = re.match("uid=(.*);pass=(.*)", sys.argv[1])
 
 if sys.argv[6].lower() == 'dataset':
     category = 6
