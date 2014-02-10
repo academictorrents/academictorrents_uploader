@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 """
-Create torrents via command line!
-
 Copyright (C) 2010-2013 Robert Nitsch
 Licensed according to GPL v3.
 """
@@ -25,17 +23,6 @@ __all__ = ['calculate_piece_length',
 # #############
 # CONFIGURATION
 
-# configure your tracker abbreviations here
-TRACKER_ABBR = {'openbt':       'udp://tracker.openbittorrent.com:80',
-                'publicbt':     'udp://tracker.publicbt.com:80'}
-
-# whether or not py3createtorrent is allowed to advertise itself
-# through the torrents' comment fields
-ADVERTISE = True
-
-# /CONFIGURATION
-# ##############
-
 # do not touch anything below this line unless you know what you're doing!
 
 
@@ -47,12 +34,6 @@ VERSION =   '0.9.5'
 KIB = 2**10
 MIB = KIB * KIB
 
-
-VERBOSE = False
-def printv(*args, **kwargs):
-    """If VERBOSE is True, act as an alias for print. Else do nothing."""
-    if VERBOSE:
-        print(*args, **kwargs)
 
 def sha1_20(data):
     """Return the first 20 bytes of the given data's SHA-1 hash."""
@@ -81,8 +62,6 @@ def create_single_file_info(file, piece_length, include_md5=True):
 
     md5 = hashlib.md5() if include_md5 else None
 
-    printv("Hashing file... ", end="")
-
     with open(file, "rb") as fh:
         while True:
             piece_data = fh.read(piece_length)
@@ -97,8 +76,6 @@ def create_single_file_info(file, piece_length, include_md5=True):
             length += _len
 
             pieces += sha1_20(piece_data)
-
-    printv("done")
 
     assert length > 0, "empty file"
 
@@ -157,9 +134,6 @@ def create_multi_file_info(directory,
         # File's md5sum.
         md5 = hashlib.md5() if include_md5 else None
 
-        printv("Processing file '%s'... " % os.path.relpath(path, directory),
-               end="")
-
         with open(path, "rb") as fh:
             while True:
                 filedata = fh.read(piece_length)
@@ -177,8 +151,6 @@ def create_multi_file_info(directory,
 
                 if include_md5:
                     md5.update(filedata)
-
-        printv("done")
 
         # Build the current file's dictionary.
         fdict = {
@@ -261,15 +233,11 @@ def get_files_in_directory(directory,
             path = os.path.join(directory, node)
 
             if os.path.normcase(path) in excluded_paths:
-                printv("Skipping '%s' due to explicit exclusion." %
-                       os.path.relpath(path, relative_to))
                 continue
 
             regexp_match = False
             for regexp in excluded_regexps:
                 if regexp.search(path):
-                    printv("Skipping '%s' due to pattern exclusion." %
-                           os.path.relpath(path, relative_to))
                     regexp_match = True
                     break
             if regexp_match:
@@ -428,22 +396,11 @@ def calculate_piece_length(size):
 
 def main(argv):
     # Validate the configuration.
-    for abbr, replacement in TRACKER_ABBR.items():
-        if not isinstance(abbr, str):
-            print("Configuration error: invalid tracker abbrevation: '%s' "
-                  "(must be a string instead)" % abbr,
-                  file=sys.stderr)
-            return 1
-        if not isinstance(replacement, (str, list)):
-            print("Configuration error: invalid tracker abbreviation: '%s' "
-                  "(must be a string or list of strings instead)" % str(replacement),
-                  file=sys.stderr)
-            return 1
 
     # Create OptionParser.
     kwargs =  {
               'usage':
-              "%prog [options] <file-or-directory> <main-tracker-url> "
+              "%prog [options] <file-or-directory> "
               "[<backup-tracker-url> ...]",
 
               'version':
@@ -473,14 +430,6 @@ def main(argv):
     parser.add_option("-f", "--force", action="store_true",
                       dest="force", default=False,
                       help="dont ask anything, just do it")
-
-    parser.add_option("-v", "--verbose", action="store_true",
-                      dest="verbose", default=False,
-                      help="verbose mode")
-
-    parser.add_option("-q", "--quiet", action="store_true",
-                      dest="quiet", default=False,
-                      help="be quiet, e.g. don't print summary")
 
     parser.add_option("-o", "--output", type="string", action="store",
                       dest="output", default=None, metavar="PATH",
@@ -518,9 +467,6 @@ def main(argv):
     (options, args) = parser.parse_args(args = argv[1:])
 
     # Positional arguments must have been provided:
-    # -> file / directory plus at least one tracker.
-    if len(args) < 2:
-        parser.error("You must specify a valid path and at least one tracker.")
 
     # Ask the user if he really wants to use uncommon piece lengths.
     # (Unless the force option has been set.)
@@ -536,13 +482,6 @@ def main(argv):
                           "continue? yes/no: "):
             parser.error("Aborted.")
 
-    # Verbose and quiet options may not be used together.
-    if options.verbose and options.quiet:
-        parser.error("Being verbose and quiet exclude each other.")
-
-    global VERBOSE
-    VERBOSE = options.verbose
-
     # ##########################################
     # CALCULATE/SET THE FOLLOWING METAINFO DATA:
     # - info
@@ -552,29 +491,10 @@ def main(argv):
     #   - name (may be overwritten in the next section by the --name option)
 
     node     = os.path.abspath(args[0])
-    trackers = args[1:]
 
     # Validate the given path.
     if not os.path.isfile(node) and not os.path.isdir(node):
         parser.error("'%s' neither is a file nor a directory." % node)
-
-    # Evaluate / apply the tracker abbreviations.
-    trackers = replace_in_list(trackers, TRACKER_ABBR)
-
-    # Remove duplicate trackers.
-    trackers = remove_duplicates(trackers)
-
-    # Validate tracker URLs.
-    invalid_trackers = False
-    regexp = re.compile(r"^(http|https|udp)://", re.I)
-    for t in trackers:
-        if not regexp.search(t):
-            print("Warning: Not a valid tracker URL: %s" % t, file=sys.stderr)
-            invalid_trackers = True
-
-    if invalid_trackers and not options.force:
-        if "yes" != input("Some tracker URLs are invalid. Continue? yes/no: "):
-            parser.error("Aborted.")
 
     # Parse and validate excluded paths.
     excluded_paths = frozenset([os.path.normcase(os.path.abspath(path)) \
@@ -611,9 +531,7 @@ def main(argv):
 
     # Torrents for 0 byte data can't be created.
     if torrent_size == 0:
-        print("Error: Can't create torrent for 0 byte data.", file=sys.stderr)
-        print("Check your files and exclusions!", file=sys.stderr)
-        return 1
+        raise Exception("No data for torrent.")
 
     # Calculate or parse the piece size.
     if options.piece_length == 0:
@@ -642,7 +560,6 @@ def main(argv):
     # - announce-list (if multiple trackers)
     # - creation date (may be disabled as well)
     # - created by
-    # - comment (may be disabled as well (if ADVERTISE = False))
 
     # Finish sub-dict "info".
     info['piece length'] = piece_length
@@ -654,17 +571,13 @@ def main(argv):
     # information.
     metainfo =  {
                 'info':           info,
-                'announce':       trackers[0],
+                'announce':       'http://academictorrents.com/announce.php',
                 }
-
-    # Make "announce-list" field, if there are multiple trackers.
-    if len(trackers) > 1:
-        metainfo['announce-list'] = [[tracker] for tracker in trackers]
 
     # Set "creation date".
     # The user may specify a custom creation date. He may also decide not
     # to include the creation date field at all.
-    if   options.date == -1:
+    if options.date == -1:
         # use current time
         metainfo['creation date'] = int(time.time())
     elif options.date >= 0:
@@ -681,8 +594,6 @@ def main(argv):
     if isinstance(options.comment, str):
         if len(options.comment) > 0:
             metainfo['comment'] = options.comment
-    elif ADVERTISE:
-        metainfo['comment'] = "created with " + metainfo['created by']
 
     # Add the name field.
     # By default this is the name of directory or file the torrent
@@ -750,71 +661,4 @@ def main(argv):
         # todo: open()'s context manager may already do this on his own?
         if os.path.exists(output_path):
             os.remove(output_path)
-
-    # #########################
-    # PREPARE AND PRINT SUMMARY
-    # - but check quiet option
-
-    # If the quiet option has been set, we're already finished here,
-    # because we don't print a summary in this case.
-    if options.quiet:
-        return 0
-
-    # Print summary!
-    print("Successfully created torrent:")
-
-    # Create the list of backup trackers.
-    backup_trackers = ""
-    if 'announce-list' in metainfo:
-        _backup_trackers = metainfo['announce-list'][1:]
-        _backup_trackers.sort(key=lambda x: x[0].lower())
-
-        for tracker in _backup_trackers:
-            backup_trackers += "    " + tracker[0] + "\n"
-        backup_trackers = backup_trackers.rstrip()
-    else:
-        backup_trackers = "    (none)"
-
-    # Calculate piece count.
-    piece_count = math.ceil(torrent_size / metainfo['info']['piece length'])
-
-    # Make torrent size human readable.
-    if torrent_size > 10*MIB:
-        size = "%.2f MiB" % (torrent_size / MIB)
-    else:
-        size = "%d KiB" % (torrent_size / KIB)
-
-    # Make creation date human readable (ISO format).
-    if 'creation date' in metainfo:
-        creation_date = datetime.datetime.fromtimestamp(metainfo['creation \
-date']).isoformat(' ')
-    else:
-        creation_date = "(none)"
-
-    # Now actually print the summary table.
-    print("  Name:             %s\n"
-          "  Size:             %s\n"
-          "  Pieces:           %d x %d KiB\n"
-          "  Comment:          %s\n"
-          "  Private:          %s\n"
-          "  Creation date:    %s\n"
-          "  Primary tracker:  %s\n"
-          "  Backup trackers:\n"
-          "%s"
-      % (metainfo['info']['name'],
-         size,
-         piece_count,
-         piece_length / KIB,
-         metainfo['comment'] if 'comment'       in metainfo else "(none)",
-         "yes" if options.private else "no",
-         creation_date,
-         metainfo['announce'],
-         backup_trackers))
-
     return 0
-
-if __name__ == '__main__':
-    try:
-        sys.exit(main(sys.argv))
-    except KeyboardInterrupt:
-        print("\nInterrupted by user.", file=sys.stderr)

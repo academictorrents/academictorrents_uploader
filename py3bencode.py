@@ -1,32 +1,7 @@
 #!/usr/bin/env python3
 """
-py3bencode is a new GPL-licensed Bencode module developed for Python 3.
-
-= Motivation =
-
-  There already have been some Bencode modules for Python, but I haven't
-  found any reliable module which works with Python 3 as well.
-
-  So I created this module from scratch.
-
-
-= Version & Changelog =
-
-  This is version 1.0 (initial release).
-
-  No changelog so far.
-
-
-= Future =
-
-  Generally it might be useful to provide more specific error messages if
-  anything goes wrong. However, the most common errors are already covered.
-
-
 = Credits =
-
   Robert Nitsch <r.s.nitsch+dev@gmail.com> - July 2010 (Version 1.0)
-
 
 = License =
 

@@ -53,6 +53,7 @@ post_params = {
 }
 
 data = urlencode(post_params).encode('utf-8')
+'''
 req = Request('http://academictorrents.com/api/paper', data)
 
 try:
@@ -62,3 +63,4 @@ except HTTPError as e:
     response = e
 
 print(response.read())
+'''
