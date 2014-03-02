@@ -101,6 +101,8 @@ class ATUploaderGui(QtWidgets.QMainWindow):
                                                     'Select Torrent',
                                                     '.', 'Torrent files (*.torrent)')
         self.ui.torrent_label.setText(torrent)
+        global my_torrent
+        my_torrent = torrent
  
     def upload(self):
         api_key = self.ui.apikey_field.text()
