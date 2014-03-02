@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>506</width>
-    <height>620</height>
+    <width>512</width>
+    <height>692</height>
    </rect>
   </property>
   <property name="acceptDrops">
@@ -17,286 +17,375 @@
    <string>Academic Torrents Uploader</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="formLayoutWidget">
+   <widget class="QWidget" name="verticalLayoutWidget_3">
     <property name="geometry">
      <rect>
-      <x>1</x>
-      <y>1</y>
-      <width>501</width>
-      <height>57</height>
+      <x>0</x>
+      <y>0</y>
+      <width>511</width>
+      <height>669</height>
      </rect>
     </property>
-    <layout class="QFormLayout" name="formLayout">
-     <property name="fieldGrowthPolicy">
-      <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+    <layout class="QVBoxLayout" name="mainColumn">
+     <property name="spacing">
+      <number>0</number>
      </property>
-     <item row="0" column="0">
-      <widget class="QLabel" name="apikey_label">
-       <property name="text">
-        <string>API Key:</string>
+     <property name="sizeConstraint">
+      <enum>QLayout::SetNoConstraint</enum>
+     </property>
+     <item>
+      <widget class="QGroupBox" name="credentialsGroup">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
        </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>90</height>
+        </size>
        </property>
-       <property name="buddy">
-        <cstring>apikey_field</cstring>
+       <property name="title">
+        <string>Credentials</string>
        </property>
+       <property name="flat">
+        <bool>false</bool>
+       </property>
+       <widget class="QWidget" name="formLayoutWidget">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>30</y>
+          <width>501</width>
+          <height>57</height>
+         </rect>
+        </property>
+        <layout class="QFormLayout" name="formLayout">
+         <property name="fieldGrowthPolicy">
+          <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+         </property>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="apikey_field"/>
+         </item>
+         <item row="1" column="1">
+          <widget class="QCheckBox" name="apikey_save_field">
+           <property name="text">
+            <string>Save API key for future use</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="apikey_label">
+           <property name="text">
+            <string>API Key:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+           <property name="buddy">
+            <cstring>apikey_field</cstring>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
       </widget>
      </item>
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="apikey_field"/>
+     <item>
+      <widget class="QGroupBox" name="dataGroup">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>250</height>
+        </size>
+       </property>
+       <property name="title">
+        <string>Torrent Data</string>
+       </property>
+       <widget class="QWidget" name="verticalLayoutWidget">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>20</y>
+          <width>501</width>
+          <height>227</height>
+         </rect>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <property name="sizeConstraint">
+          <enum>QLayout::SetNoConstraint</enum>
+         </property>
+         <item>
+          <widget class="QComboBox" name="data_source_field">
+           <item>
+            <property name="text">
+             <string>Create Torrent From File</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Create Torrent From Directory</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Create Torrent From URL</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Select Existing Torrent</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item>
+          <layout class="QFormLayout" name="data_selection_container">
+           <property name="fieldGrowthPolicy">
+            <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+           </property>
+           <property name="labelAlignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+           <item row="0" column="0">
+            <widget class="QPushButton" name="select_file_button">
+             <property name="text">
+              <string>Select File</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLabel" name="file_label">
+             <property name="text">
+              <string>No file selected.</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="select_url_label">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Select URL:</string>
+             </property>
+             <property name="buddy">
+              <cstring>select_url_field</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QLineEdit" name="select_url_field">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QPushButton" name="select_torrent_button">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Select Torrent File</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QLabel" name="torrent_label">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>No file selected.</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QPushButton" name="select_directory_button">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Select Directory</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QLabel" name="directory_label">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>No directory selected.</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QProgressBar" name="download_progress">
+           <property name="value">
+            <number>0</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="create_torrent_button">
+           <property name="text">
+            <string>Create Torrent</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
      </item>
-     <item row="1" column="1">
-      <widget class="QCheckBox" name="apikey_save_field">
+     <item>
+      <widget class="QGroupBox" name="metadataGroup">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>300</height>
+        </size>
+       </property>
+       <property name="title">
+        <string>Metadata</string>
+       </property>
+       <widget class="QWidget" name="verticalLayoutWidget_2">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>20</y>
+          <width>501</width>
+          <height>271</height>
+         </rect>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item>
+          <layout class="QFormLayout" name="formLayout_4">
+           <property name="fieldGrowthPolicy">
+            <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+           </property>
+           <property name="labelAlignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+           <item row="1" column="1">
+            <widget class="QLineEdit" name="torrent_name_field"/>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="authors_label">
+             <property name="text">
+              <string>Author(s):</string>
+             </property>
+             <property name="buddy">
+              <cstring>authors_field</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QLineEdit" name="tags_field"/>
+           </item>
+           <item row="2" column="1">
+            <widget class="QLineEdit" name="authors_field"/>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="torrent_name_label">
+             <property name="text">
+              <string>Torrent Name:</string>
+             </property>
+             <property name="buddy">
+              <cstring>torrent_name_field</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0">
+            <widget class="QLabel" name="backup_url_label">
+             <property name="text">
+              <string>Backup URL(s):</string>
+             </property>
+             <property name="buddy">
+              <cstring>backup_url_field</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="tags_label">
+             <property name="text">
+              <string>Tags:</string>
+             </property>
+             <property name="buddy">
+              <cstring>tags_field</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="1">
+            <widget class="QLineEdit" name="backup_url_field"/>
+           </item>
+           <item row="6" column="1">
+            <widget class="QComboBox" name="category_field">
+             <item>
+              <property name="text">
+               <string>Dataset</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Paper</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="6" column="0">
+            <widget class="QLabel" name="category_label">
+             <property name="text">
+              <string>Category:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="1">
+            <widget class="QPlainTextEdit" name="description_field"/>
+           </item>
+           <item row="5" column="0">
+            <widget class="QLabel" name="description_label">
+             <property name="text">
+              <string>Description:</string>
+             </property>
+             <property name="buddy">
+              <cstring>description_field</cstring>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+       <zorder>verticalLayoutWidget_2</zorder>
+       <zorder>dataGroup</zorder>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="upload_button">
        <property name="text">
-        <string>Save API key for future use</string>
+        <string>Upload Torrent</string>
        </property>
       </widget>
      </item>
     </layout>
-   </widget>
-   <widget class="QGroupBox" name="groupBox">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>60</y>
-      <width>529</width>
-      <height>221</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>Torrent Data</string>
-    </property>
-    <widget class="QWidget" name="verticalLayoutWidget">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>20</y>
-       <width>501</width>
-       <height>201</height>
-      </rect>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <item>
-       <widget class="QComboBox" name="data_source_field">
-        <item>
-         <property name="text">
-          <string>Create Torrent From File(s)</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Create Torrent from URL</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Select Existing Torrent</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item>
-       <layout class="QFormLayout" name="formLayout_2">
-        <property name="fieldGrowthPolicy">
-         <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-        </property>
-        <property name="labelAlignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-        <item row="0" column="0">
-         <widget class="QPushButton" name="select_file_button">
-          <property name="text">
-           <string>Select File(s)</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QLabel" name="label">
-          <property name="text">
-           <string>No file selected.</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="select_url_label">
-          <property name="text">
-           <string>Select URL:</string>
-          </property>
-          <property name="buddy">
-           <cstring>select_url_field</cstring>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QLineEdit" name="select_url_field"/>
-        </item>
-        <item row="2" column="0">
-         <widget class="QPushButton" name="select_torrent_button">
-          <property name="text">
-           <string>Select Torrent File</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="1">
-         <widget class="QLabel" name="label_2">
-          <property name="text">
-           <string>No file selected.</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <widget class="QProgressBar" name="download_progress">
-        <property name="value">
-         <number>0</number>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="create_torrent_button">
-        <property name="text">
-         <string>Create Torrent</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </widget>
-   <widget class="QGroupBox" name="groupBox_2">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>280</y>
-      <width>501</width>
-      <height>291</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>Metadata</string>
-    </property>
-    <widget class="QWidget" name="verticalLayoutWidget_2">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>20</y>
-       <width>501</width>
-       <height>271</height>
-      </rect>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout_3">
-      <item>
-       <layout class="QFormLayout" name="formLayout_4">
-        <property name="fieldGrowthPolicy">
-         <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-        </property>
-        <property name="labelAlignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-        <item row="1" column="1">
-         <widget class="QLineEdit" name="torrent_name_field"/>
-        </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="authors_label">
-          <property name="text">
-           <string>Author(s):</string>
-          </property>
-          <property name="buddy">
-           <cstring>authors_field</cstring>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="1">
-         <widget class="QLineEdit" name="tags_field"/>
-        </item>
-        <item row="2" column="1">
-         <widget class="QLineEdit" name="authors_field"/>
-        </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="torrent_name_label">
-          <property name="text">
-           <string>Torrent Name:</string>
-          </property>
-          <property name="buddy">
-           <cstring>torrent_name_field</cstring>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="0">
-         <widget class="QLabel" name="backup_url_label">
-          <property name="text">
-           <string>Backup URL(s):</string>
-          </property>
-          <property name="buddy">
-           <cstring>backup_url_field</cstring>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0">
-         <widget class="QLabel" name="tags_label">
-          <property name="text">
-           <string>Tags:</string>
-          </property>
-          <property name="buddy">
-           <cstring>tags_field</cstring>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="1">
-         <widget class="QLineEdit" name="backup_url_field"/>
-        </item>
-        <item row="6" column="1">
-         <widget class="QComboBox" name="category_field">
-          <item>
-           <property name="text">
-            <string>Dataset</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Paper</string>
-           </property>
-          </item>
-         </widget>
-        </item>
-        <item row="6" column="0">
-         <widget class="QLabel" name="category_label">
-          <property name="text">
-           <string>Category:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="1">
-         <widget class="QPlainTextEdit" name="description_field"/>
-        </item>
-        <item row="5" column="0">
-         <widget class="QLabel" name="description_label">
-          <property name="text">
-           <string>Description:</string>
-          </property>
-          <property name="buddy">
-           <cstring>description_field</cstring>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-     </layout>
-    </widget>
-   </widget>
-   <widget class="QPushButton" name="upload_button">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>570</y>
-      <width>499</width>
-      <height>27</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Upload Torrent</string>
-    </property>
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
