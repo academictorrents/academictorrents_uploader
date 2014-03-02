@@ -2,7 +2,6 @@
 import sys
 from PyQt5 import QtGui, QtCore, QtWidgets, uic
 from torrent import make_torrent
-import pdb
 import os.path
 import re
 from base64 import b64encode
@@ -130,6 +129,7 @@ class ATUploaderGui(QtWidgets.QMainWindow):
             'descr' : self.ui.description_field.toPlainText(),
             'category' : category,
             'tags' : self.ui.tags_field.text(),
+            'urllist' : self.ui.backup_url_field.text(),
             'file' : b64encode(open(my_torrent, 'rb').read())
         }
         
