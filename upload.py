@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!python3
 import sys
 import json
 from base64 import b64encode
@@ -17,6 +17,9 @@ if len(sys.argv)!=9:
 # create the torrent
 torrent_args = sys.argv[0:2]
 torrent_args[1] = sys.argv[2]
+##set the piece size
+#torrent_args.append('-p')
+#torrent_args.append('4766')
 torrent_args.append('http://academictorrents.com/announce.php')
 torrentname = basename(sys.argv[2]) + ".torrent"
 
@@ -49,7 +52,8 @@ post_params = {
     'category' : category,
     'tags' : sys.argv[7],
     'urllist' : sys.argv[8],
-    'file' : b64_torrent
+    'file' : b64_torrent,
+    'private': 'true'
 }
 
 data = urlencode(post_params).encode('utf-8')
