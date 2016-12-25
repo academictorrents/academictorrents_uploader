@@ -11,4 +11,4 @@ read authors
 
 
 wget -c "$url"
-python3 $DIR/upload.py "$(cat $DIR/key)" "${url##*/}" "$name" "$authors" "@article{}" dataset "" "$url"
+python3 $DIR/upload.py "$(cat $DIR/key)" "${url##*/}" "$name" "$authors" "@article{,title={$name}}" dataset "" "$url"
