@@ -17,9 +17,16 @@ if len(sys.argv)!=9:
 # create the torrent
 torrent_args = sys.argv[0:2]
 torrent_args[1] = sys.argv[2]
-##set the piece size
-#torrent_args.append('-p')
-#torrent_args.append('4766')
+
+torrent_args.append("-c")
+torrent_args.append("Torrent created with https://github.com/AcademicTorrents/academictorrents_uploader")
+
+#set the piece size
+torrent_args.append('-p')
+torrent_args.append('4092')
+
+torrent_args.append('-f')
+
 torrent_args.append('http://academictorrents.com/announce.php')
 torrentname = basename(sys.argv[2]) + ".torrent"
 
