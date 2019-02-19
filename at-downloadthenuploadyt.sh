@@ -13,7 +13,7 @@ read authors
 
 mkdir $foldername
 cd $foldername
-youtube-dl $url
+youtube-dl -f 18 -i $url
 cd ..
 
 
