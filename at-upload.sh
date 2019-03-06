@@ -19,4 +19,6 @@ read name
 echo "Authors:"
 read authors
 
+echo "Processing"
+
 python3 $DIR/upload.py "$(cat $DIR/key)" "$file" "$name" "$authors" "@article{,title={$name}}" dataset "" ""
