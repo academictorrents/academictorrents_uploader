@@ -3,6 +3,12 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 file="$1"
 
+if [ ! -f $DIR/key ]; then
+    echo "API key file not found. Put your API key here: $DIR/key"
+    exit
+fi
+
+
 echo "$file"
 du -h "$file"
 echo listing . files
