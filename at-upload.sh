@@ -10,7 +10,7 @@ fi
 
 
 echo "$file"
-du -h "$file"
+du -L -h "$file"
 echo listing . files
 find "$file" -name ".*"
 
