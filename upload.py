@@ -23,7 +23,7 @@ torrent_args.append("Torrent created with https://github.com/AcademicTorrents/ac
 
 #set the piece size
 torrent_args.append('-p')
-torrent_args.append('4092')
+torrent_args.append('16384')
 
 torrent_args.append('-f')
 
@@ -65,7 +65,7 @@ post_params = {
 
 data = urlencode(post_params).encode('utf-8')
 
-req = Request('http://academictorrents.com/api/paper', data)
+req = Request('https://academictorrents.com/api/paper', data)
 
 try:
     response = urlopen(req)
