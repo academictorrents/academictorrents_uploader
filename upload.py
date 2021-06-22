@@ -23,11 +23,13 @@ torrent_args.append("Torrent created with https://github.com/AcademicTorrents/ac
 
 #set the piece size
 torrent_args.append('-p')
-torrent_args.append('16384')
+#torrent_args.append('16384')
+torrent_args.append('32768')
+#torrent_args.append('65536')
 
 torrent_args.append('-f')
 
-torrent_args.append('http://academictorrents.com/announce.php')
+torrent_args.append('https://academictorrents.com/announce.php')
 torrentname = basename(sys.argv[2]) + ".torrent"
 
 # if file exists, we assume torrent already created
@@ -65,7 +67,7 @@ post_params = {
 
 data = urlencode(post_params).encode('utf-8')
 
-req = Request('https://academictorrents.com/api/paper', data)
+req = Request('https://academictorrents.com/apiv2/entry', data)
 
 try:
     response = urlopen(req)
