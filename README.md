@@ -1,6 +1,7 @@
 Uploader for Academic Torrents
 ==============================
 
+This uploader uses the API to upload torrent files (https://academictorrents.com/docs/api.html)
 
 Upload script
 =============
