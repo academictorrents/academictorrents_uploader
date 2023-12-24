@@ -1,20 +1,16 @@
 Uploader for Academic Torrents
 ==============================
 
-GUI for uploading to Academic Torrents.  You will need an account first.  Currently requires:
-- Python 3
-- bencode module
-- PyQt5
 
-Eventually I will try to distribute a cross-platform executable to make this easier to use.
+Upload script
+=============
 
-Instructions
-------------
+ - The script `at-upload.sh` will help automate the upload. 
+ - Put your API key (https://academictorrents.com/my.php) in a file called `key` in the folder where the script is located.
+ - Run the script like this and enter the title and author of your torrent when prompted.
 
-1. Run the uploader (from the command line, navigate to the file directory and type "python3 academictorrents_uploader.py")
-2. Log in to Academic Torrents and copy your API key (https://academictorrents.com/my.php) into the field.
-3. Select a file or directory to create a torrent from (other methods not yet implemented).
-4. Input metadata.
-5. Upload.
+```bash
+$ at-upload.sh file_or_folder
+```
 
-Feedback very much appreciated!
+
